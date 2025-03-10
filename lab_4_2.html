@@ -1,132 +1,128 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Form</title>
     <style>
         body {
-            background-color: #006080;
+            background-color: #006680;
             color: white;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
+            margin: 20px;
         }
         h1 {
             text-align: center;
             font-size: 48px;
             margin-bottom: 40px;
         }
-        .form-container {
-            width: 90%;
-            margin: 0 auto;
-        }
         .form-row {
             display: flex;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         .form-group {
             flex: 1;
             margin-right: 20px;
-        }
-        .form-group:last-child {
-            margin-right: 0;
         }
         label {
             font-size: 24px;
             display: block;
             margin-bottom: 10px;
         }
-        input[type="text"], input[type="password"], input[type="email"], select {
+        input, select {
             padding: 5px;
             font-size: 16px;
-            border: none;
         }
-        .date-input {
-            font-size: 16px;
-        }
-        .radio-group {
-            margin-bottom: 20px;
-        }
-        .radio-label {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        .checkbox-group label {
-            display: inline;
-            margin-right: 15px;
-            font-size: 24px;
-        }
-        .buttons {
+        .button-group {
             display: flex;
             justify-content: center;
             gap: 20px;
             margin-top: 20px;
         }
-        .btn {
-            background-color: #d14700;
-            color: white;
+        .button-group button {
+            padding: 10px 30px;
+            font-size: 18px;
             border: none;
-            padding: 10px 20px;
-            font-size: 20px;
-            cursor: pointer;
-            width: 150px;
-            text-align: center;
             border-radius: 5px;
+            cursor: pointer;
+            background-color: #d1500f;
+            color: white;
+            width: 200px;
+        }
+        #nameDisplay {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .error {
+            color: #ff6666;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <h1>Application Form</h1>
     
-    <div class="form-container">
+    <form id="applicationForm" onsubmit="return validateForm()">
         <div class="form-row">
             <div class="form-group">
                 <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName">
+                <input type="text" id="firstName" name="firstName" required>
             </div>
+            
             <div class="form-group">
                 <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName">
+                <input type="text" id="lastName" name="lastName" required>
             </div>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="dob">Date of birth:</label>
-                <input type="text" id="dob" name="dob" class="date-input" placeholder="mm / dd / yyyy">
+                <input type="date" id="dob" name="dob" required>
+                <div id="dobError" class="error"></div>
             </div>
+            
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input type="text" id="age" name="age">
+                <input type="number" id="age" name="age" min="15" max="30" required>
+                <div id="ageError" class="error"></div>
             </div>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                <select id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label for="email">Email Address:</label>
-                <input type="email" id="email" name="email" placeholder="Enter email address">
+                <input type="email" id="email" name="email" placeholder="Enter email address" required>
             </div>
         </div>
         
         <div class="form-row">
             <div class="form-group">
                 <label>Positions Available:</label>
-                <div class="radio-group">
-                    <input type="radio" id="junior" name="position" value="junior">
-                    <label for="junior" class="radio-label">Junior Developer</label>
+                <div>
+                    <input type="radio" id="junior" name="position" value="Junior Developer" required>
+                    <label for="junior">Junior Developer</label>
                     
-                    <input type="radio" id="midlevel" name="position" value="midlevel">
-                    <label for="midlevel" class="radio-label">Mid-level Developer</label>
+                    <input type="radio" id="midlevel" name="position" value="Mid-level Developer">
+                    <label for="midlevel">Mid-level Developer</label>
                     
-                    <input type="radio" id="senior" name="position" value="senior">
-                    <label for="senior" class="radio-label">Senior Developer</label>
+                    <input type="radio" id="senior" name="position" value="Senior Developer">
+                    <label for="senior">Senior Developer</label>
                 </div>
             </div>
         </div>
@@ -134,14 +130,14 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Programming Languages:</label>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="java" name="languages" value="java">
+                <div>
+                    <input type="checkbox" id="java" name="languages" value="Java">
                     <label for="java">Java</label>
                     
-                    <input type="checkbox" id="javascript" name="languages" value="javascript">
+                    <input type="checkbox" id="javascript" name="languages" value="JavaScript">
                     <label for="javascript">JavaScript</label>
                     
-                    <input type="checkbox" id="python" name="languages" value="python">
+                    <input type="checkbox" id="python" name="languages" value="Python">
                     <label for="python">Python</label>
                 </div>
             </div>
@@ -150,19 +146,109 @@
         <div class="form-row">
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" required>
+                <div id="passwordError" class="error"></div>
             </div>
+            
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword">
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div id="confirmPasswordError" class="error"></div>
             </div>
         </div>
         
-        <div class="buttons">
-            <button type="submit" class="btn">Submit</button>
-            <button type="reset" class="btn">Reset</button>
+        <div class="button-group">
+            <button type="submit">Submit</button>
+            <button type="reset">Reset</button>
         </div>
-    </div>
+    </form>
     
+    <div id="nameDisplay"></div>
+    
+    <script>
+        // Update age when date of birth changes
+        document.getElementById('dob').addEventListener('change', function() {
+            const dob = new Date(this.value);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            
+            document.getElementById('age').value = age;
+        });
+        
+        // Update date of birth when age changes
+        document.getElementById('age').addEventListener('change', function() {
+            const age = parseInt(this.value);
+            if (age >= 15 && age <= 30) {
+                document.getElementById('ageError').textContent = '';
+            } else {
+                document.getElementById('ageError').textContent = 'Age must be between 15 and 30';
+            }
+        });
+        
+        function validateForm() {
+            let isValid = true;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dob = new Date(document.getElementById('dob').value);
+            const age = parseInt(document.getElementById('age').value);
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Clear previous error messages
+            document.getElementById('dobError').textContent = '';
+            document.getElementById('ageError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+            
+            // Validate age (15-30)
+            if (age < 15 || age > 30) {
+                document.getElementById('ageError').textContent = 'Age must be between 15 and 30';
+                isValid = false;
+            }
+            
+            // Validate date of birth
+            const today = new Date();
+            const minDate = new Date();
+            minDate.setFullYear(today.getFullYear() - 30);
+            const maxDate = new Date();
+            maxDate.setFullYear(today.getFullYear() - 15);
+            
+            if (dob < minDate || dob > maxDate) {
+                document.getElementById('dobError').textContent = 'Date of birth must correspond to age between 15 and 30';
+                isValid = false;
+            }
+            
+            // Validate password (at least 8 characters, one number, one uppercase, one lowercase)
+            const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('passwordError').textContent = 
+                    'Password must be at least 8 characters and include at least one number, one uppercase and one lowercase letter';
+                isValid = false;
+            }
+            
+            // Validate password confirmation
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Display name in alert box
+                alert('First Name: ' + firstName + '\nLast Name: ' + lastName);
+                
+                // Display name below the form
+                const nameDisplay = document.getElementById('nameDisplay');
+                nameDisplay.textContent = 'First Name: ' + firstName + ' | Last Name: ' + lastName;
+                nameDisplay.style.display = 'block';
+            }
+            
+            return isValid;
+        }
+    </script>
 </body>
 </html>
